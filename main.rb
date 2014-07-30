@@ -136,40 +136,40 @@ class CssPropertyPopulator
   },
   "updates" : [
     {
-      "name" : "selectors",
+      "name" : "Selectors",
       "webPlatformUri" : "http://docs.webplatform.org/wiki/css/selectors",
       "w3cUri" : "http://www.w3.org/TR/selectors/#selectors"
     },
     {
-      "name" : "properties",
+      "name" : "Properties",
       "webPlatformUri" : "http://docs.webplatform.org/wiki/css/properties",
       "w3cUri" : "http://www.w3.org/community/webed/wiki/CSS/Properties"
     },
     {
-      "name" : "functions",
+      "name" : "Functions",
       "webPlatformUri" : "http://docs.webplatform.org/wiki/css/functions"
     },
     {
-      "name" : "pseudo-classes",
+      "name" : "Pseudo-classes",
       "mdnUri" : "https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes"
     },
     {
-      "name" : "pseudo-elements",
+      "name" : "Pseudo-elements",
       "mdnUri" : "https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements"
     },
     {
-      "name" : "at rules",
+      "name" : "At Rules",
       "mdnUri" : "https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule",
       "webPlatformUri" : "http://docs.webplatform.org/wiki/css/atrules"
     },
     {
-      "name" : "box model",
+      "name" : "Box model",
       "mdnUri" : "https://developer.mozilla.org/en-US/docs/Web/CSS/box_model",
       "webPlatformUri" : "http://docs.webplatform.org/wiki/guides/the_css_layout_model",
       "w3cUri" : "http://www.w3.org/wiki/The_CSS_layout_model_-_boxes_borders_margins_padding"
     },
     {
-      "name" : "specificity",
+      "name" : "Specificity",
       "mdnUri" : "https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity"
     },
     {
@@ -179,13 +179,13 @@ class CssPropertyPopulator
       "w3cUri" : "http://www.w3.org/TR/css3-cascade/"
     },
     {
-      "name" : "cascade",
+      "name" : "Cascade",
       "mdnUri" : "https://developer.mozilla.org/en-US/docs/Web/CSS/inheritance",
       "webPlatformUri" : "http://docs.webplatform.org/wiki/tutorials/inheritance_and_cascade",
       "w3cUri" : "http://www.w3.org/TR/css3-cascade/"
     },
     {
-      "name" : "media query",
+      "name" : "Media query",
       "webPlatformUri" : "http://docs.webplatform.org/wiki/css/mediaqueries",
       "mdnUri" : "https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Media_queries",
       "w3cUri" : "http://www.w3.org/community/webed/wiki/CSS/Mediaqueries"
@@ -261,6 +261,10 @@ class CssPropertyPopulator
         return "functions/#{item_name.gsub('()', '')}"
       when ITEM_KIND_AT_RULE
         return "atrules/#{item_name}"
+      when ITEM_KIND_PSEUDO_CLASS
+        return "selectors/pseudo-classes/#{item_name}"
+      when ITEM_KIND_PSEUDO_ELEMENT
+        return "selectors/pseudo-elements/#{item_name}"
       else
         return nil
     end
@@ -288,8 +292,11 @@ class CssPropertyPopulator
     name = simple_filename.slice(4 ... (simple_filename.length - 5))
     kind = item_kind(name)
 
+    web_platform_uri = nil
     uri_suffix = web_platform_uri_suffix(name, kind)
-    web_platform_uri = "#{WEB_PLATFORM_BASE_URL}/#{uri_suffix}"
+    if uri_suffix
+      web_platform_uri = "#{WEB_PLATFORM_BASE_URL}/#{uri_suffix}"
+    end
 
     recognition_key = recognition_key_for_kind(kind)
 
