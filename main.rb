@@ -4,6 +4,7 @@ require 'net/http'
 
 MDN_BASE_URL = 'https://developer.mozilla.org'
 WEB_PLATFORM_BASE_URL = 'http://docs.webplatform.org/wiki/css'
+W3C_BASE_URL = 'http://www.w3.org'
 DOWNLOAD_DIR = './downloaded'
 ITEM_KIND_PROPERTY = 'property'
 ITEM_KIND_AT_RULE = 'at-rule'
@@ -284,6 +285,19 @@ class CssPropertyPopulator
     end
   end
 
+  def compute_w3c_uri(item_name, kind)
+    case kind
+      when ITEM_KIND_PROPERTY
+        return "#{W3C_BASE_URL}/wiki/CSS/Properties/#{item_name}"
+      when ITEM_KIND_PSEUDO_CLASS
+        return "#{W3C_BASE_URL}/wiki/CSS/Selectors/pseudo-classes/#{item_name}"
+      when ITEM_KIND_PSEUDO_ELEMENT
+        return "#{W3C_BASE_URL}/wiki/CSS/Selectors/pseudo-elements/#{item_name}"
+      else
+        return nil
+    end
+  end
+
   def recognition_key_for_kind(kind)
     prefix = 'com.solveforall.recognition.programming.web.css.'
     suffix = kind[0].upcase + kind.slice(1, kind.length - 1)
@@ -311,8 +325,6 @@ class CssPropertyPopulator
     if uri_suffix
       web_platform_uri = "#{WEB_PLATFORM_BASE_URL}/#{uri_suffix}"
     end
-
-    recognition_key = recognition_key_for_kind(kind)
 
     puts "Parsing file '#{mdn_file_path}' for '#{name}' ..."
 
@@ -364,8 +376,9 @@ class CssPropertyPopulator
       name: name,
       summary: summary,
       mdnUri: mdn_uri,
+      w3cUri: compute_w3c_uri(name, kind),
       webPlatformUri: web_platform_uri,
-      recognitionKeys: [recognition_key]
+      recognitionKeys: [recognition_key_for_kind(kind)]
     }
 
     if kind == ITEM_KIND_PROPERTY
