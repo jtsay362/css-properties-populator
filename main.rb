@@ -101,7 +101,7 @@ class CssPropertyPopulator
           "index" : "analyzed"
         },
         "recognitionKeys" : {
-          "type" : "array",
+          "type" : "string",
           "index" : "no"
         },
         "summary" : {
@@ -114,11 +114,11 @@ class CssPropertyPopulator
         },
         "metaProperties" : {
           "type" : "object",
-          "index" : "no"
+          "enabled" : false
         },
         "values" : {
-          "type" : "array",
-          "index" : "no"
+          "type" : "object",
+          "enabled" : false
         },
         "mdnUri" : {
           "type" : "string",
