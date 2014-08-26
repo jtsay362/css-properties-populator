@@ -98,7 +98,7 @@ class CssPropertyPopulator
       "properties" : {
         "name" : {
           "type" : "string",
-          "index" : "analyzed"
+          "index" : "not_analyzed"
         },
         "recognitionKeys" : {
           "type" : "string",
