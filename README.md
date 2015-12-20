@@ -18,3 +18,6 @@ https://solveforall.com/docs/developer/semantic_data_collection
 Any enhancements are welcome! Please submit your pull request and if accepted, it will
 improve the content on Solve for All.
 
+License
+
+This project is licensed with the Apache License, Version 2.0. See LICENSE.
